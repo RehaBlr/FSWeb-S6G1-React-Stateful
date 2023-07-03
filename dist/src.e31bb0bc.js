@@ -29354,8 +29354,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Programcilar;
 exports.enIyilerListesi = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _react = _interopRequireWildcard(require("react"));
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -29400,14 +29405,15 @@ var enIyilerListesi = [{
 }];
 exports.enIyilerListesi = enIyilerListesi;
 function Programcilar() {
-  var _React$useState = _react.default.useState(0),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    progId = _React$useState2[0],
-    setProgId = _React$useState2[1];
-  var _React$useState3 = _react.default.useState(enIyilerListesi),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    progAdlar = _React$useState4[0],
-    setProgAdlar = _React$useState4[1];
+  var _useState = (0, _react.useState)(enIyilerListesi),
+    _useState2 = _slicedToArray(_useState, 2),
+    progArr = _useState2[0],
+    setProgArr = _useState2[1];
+  var _useState3 = (0, _react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    bestId = _useState4[0],
+    setBestId = _useState4[1];
+
   // İki state dilimine ihtiyacımız olduğundan, state hooku iki kez kullanmamız gerekecek..
   // Bir yanda programcılar listesi, diğer yanda öne çıkan programcının idsi.
 
@@ -29417,13 +29423,16 @@ function Programcilar() {
     // Öne çıkan geliştiricinin _isim_ adını döndürmek için her iki state dilimini kullanacak.
     // Closureların güzelliği, argümanlar yoluyla bilgi enjekte etmeye gerek kalmadan programın
     // bu bölgesinden her iki state dilimini de "görebilmemiz"dir.
+    var bulunan = progArr.find(function (dev) {
+      return dev.id === bestId;
+    });
+    return bulunan.isim;
   };
-  var stil = {
+  var stil = _defineProperty({
     fontSize: "1.5em",
     marginTop: "0.5em",
-    color: "royalblue" // 🤔 kutlarken renk gold'a dönecek
-  };
-
+    color: "royalblue"
+  }, "color", bestId ? "gold" : "royalblue");
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "widget-programmers container"
   }, /*#__PURE__*/_react.default.createElement("h2", null, "Programc\u0131lar"), /*#__PURE__*/_react.default.createElement("div", {
@@ -29433,13 +29442,13 @@ function Programcilar() {
   // Şöyle diyebiliriz: "aa bu çalışıyor!" Ama programcilar bir state diliminden gelmiyorsa,
   // asla yeni programci ekleyemeyiz, programcilari düzenleyemeyiz ya da silemeyiz. Düzeltin!
   " */
-  progAdlar.map(function (dev) {
+  progArr.map(function (dev) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "programmer",
       key: dev.id
     }, dev.isim, " ", /*#__PURE__*/_react.default.createElement("button", {
       onClick: function onClick() {
-        setProgId(dev.id);
+        setBestId(dev.id);
 
         /* burada dev.id 'yi öne çıkan id'ye atayın */
       }
@@ -29451,7 +29460,7 @@ function Programcilar() {
   // Üçlüler, bir şeyin "gerçekliğine" bağlı olarak "bir şeyi veya diğerini" ifade etmek için harikadır..
   // Sözde-kod: öne çıkan true ise metin 1'i oluşturun, aksi takdirde metin 2'yi oluşturun..
   // Sabit kodlanmış false'u doğru değişkenle değiştirin.
-  false ? "\uD83C\uDF89 Hadi ".concat(oneCikaninIsmi(), "'\u0131 kutlayal\u0131m! \uD83E\uDD73") : "Harika bir programcı seçin"));
+  bestId ? "\uD83C\uDF89 Hadi ".concat(oneCikaninIsmi(), "'\u0131 kutlayal\u0131m! \uD83E\uDD73") : "Harika bir programcı seçin"));
 }
 },{"react":"../node_modules/react/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
