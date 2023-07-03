@@ -45,11 +45,11 @@ ADIM 6:
 	Bu click handler 'sayici' yı sıfırlamak için 'setSayici' yi kullanacak.
 */
 
-import React from "react"; /* ADIM 0 buraya*/
+import React, { useState } from "react"; /* ADIM 0 buraya*/
 
 export default function Sayac() {
   /* ADIM 1 buraya*/
-  const [sayici, setSayici] = React.useState(0);
+  const [sayici, setSayici] = useState(0);
 
   const artirici = () => {
     /* ADIM 4 buraya */
@@ -66,22 +66,24 @@ export default function Sayac() {
   const stil = {
     fontSize: "1.5em",
     marginBottom: "0.3em",
-    color: "royalblue" /* ADIM 2 */,
+    // color: "royalblue" /* ADIM 2 */,
+    color: sayici % 2 === 0 ? "royalblue" : "crimson",
   };
-  let isOdd = "çift";
-  if (sayici % 2 === 0) {
-    stil.color = "royalblue";
-    isOdd = "çift";
-  } else {
-    stil.color = "crimson";
-    isOdd = "tek";
-  }
+  // let isOdd = "çift";
+  // if (sayici % 2 === 0) {
+  //   stil.color = "royalblue";
+  //   isOdd = "çift";
+  // } else {
+  //   stil.color = "crimson";
+  //   isOdd = "tek";
+  // }
 
   return (
     <div className="widget-counter container">
       <h2>Sayaç</h2>
       <div id="sayici" style={stil}>
-        Sayı {sayici} {isOdd /* ADIM 3  buraya*/}
+        Sayı {sayici} {sayici % 2 === 0 ? "çift" : "tek"}
+        {/* ADIM 3  buraya*/}
       </div>
       <div>
         <button id="artirici" onClick={artirici}>
